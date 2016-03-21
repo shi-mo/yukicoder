@@ -7,4 +7,9 @@ if [ $# -lt 1 ]; then
     exit 1
 fi
 
+if [ -e $1.rb ]; then
+  cat $1.rb | pbcopy
+  exit 0
+fi
+
 cat $1.c | pbcopy

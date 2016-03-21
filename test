@@ -10,6 +10,9 @@ fi
 for ID in $*; do
     DIR=${ID}
     BIN=./${DIR}.exe
+    if [ ! -e ${BIN} ]; then
+        BIN="ruby ${DIR}.rb"
+    fi
 
     echo -n "${ID} "
     if [ ! -e ${DIR}/ ]; then
