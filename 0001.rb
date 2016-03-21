@@ -36,7 +36,7 @@ class ShortcutProblem
     @credits    = credits
     @num_ways   = num_ways
 
-    @way_table  = create_way_table(ways) # elements must be sorted by Way#time
+    @way_table  = create_way_table(ways)
   end
   attr_reader :num_cities, :credits, :num_ways
 
@@ -50,7 +50,7 @@ class ShortcutProblem
       @way_table[1][num_cities].select{|way| way.credits <= credits }
 
     return NO_SOLUTION if ways_satisfy_condition.empty?
-    ways_satisfy_condition.first.time
+    ways_satisfy_condition.map{|way| way.time }.sort!.first
   end
 
   def create_way_table(ways)
@@ -64,7 +64,6 @@ class ShortcutProblem
 
   def connect_ways_to(terminal)
     if 2 == terminal
-      sort_table_entry(@way_table[1][2])
       return
     end
 
@@ -77,11 +76,6 @@ class ShortcutProblem
          connected_ways << connect_ways(1, terminal, way1, way2)
        end
     end
-    sort_table_entry(connected_ways)
-  end
-
-  def sort_table_entry(entry)
-    entry.sort_by!{|way| way.time }
   end
 
   def connect_ways(start, terminal, way1, way2)
