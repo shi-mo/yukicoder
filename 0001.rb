@@ -1,94 +1,63 @@
 #!ruby
 
-require 'scanf'
+def load_int(io)
+  io.gets.to_i
+end
 
-class ShortcutProblem
-  Way = Struct.new('Way', :start, :terminal, :credits, :time)
+def load_int_array(io)
+  io.gets.chomp.split.map(&:to_i)
+end
 
-  def self.load(io)
-    num_cities = io.gets.scanf('%d\n')[0]
-    credits    = io.gets.scanf('%d\n')[0]
-    num_ways   = io.gets.scanf('%d\n')[0]
-    ways = load_ways_from(io, num_ways)
+def load_problem(io)
+  num_cities = load_int(io)
+  cost_limit = load_int(io)
+  num_ways   = load_int(io)
 
-    new(num_cities, credits, num_ways, ways)
+  s = load_int_array(io)
+  t = load_int_array(io)
+  y = load_int_array(io)
+  m = load_int_array(io)
+
+  ways = []
+  num_ways.times do |i|
+    ways << { start: s[i], terminal: t[i], cost: y[i], time: m[i] }
   end
+  ways_from = ways.group_by{|way| way[:start] }
 
-  def self.load_ways_from(io, num_ways)
-    starts    = parse_int_array_from(io.gets)
-    terminals = parse_int_array_from(io.gets)
-    credits   = parse_int_array_from(io.gets)
-    times     = parse_int_array_from(io.gets)
-
-    ways = []
-    num_ways.times do |i|
-      ways << Way.new(starts[i], terminals[i], credits[i], times[i])
-    end
-    ways
-  end
-
-  def self.parse_int_array_from(line)
-    line.chomp.split(/ /).map(&:to_i)
-  end
-
-  def initialize(num_cities, credits, num_ways, ways)
-    @num_cities = num_cities
-    @credits    = credits
-    @num_ways   = num_ways
-
-    @way_table  = create_way_table(ways)
-  end
-  attr_reader :num_cities, :credits, :num_ways
-
-  NO_SOLUTION = -1
-  def solve
-    2.upto(num_cities) do |i|
-      connect_ways_to(i)
-    end
-
-    ways_satisfy_condition = \
-      @way_table[1][num_cities].select{|way| way.credits <= credits }
-
-    return NO_SOLUTION if ways_satisfy_condition.empty?
-    ways_satisfy_condition.map{|way| way.time }.sort!.first
-  end
-
-  def create_way_table(ways)
-    table = Array.new(num_cities+1){ Array.new(num_cities+1){ [] } }
-    ways.each do |way|
-      table_entry = table[way.start][way.terminal]
-      table_entry << way
-    end
-    table
-  end
-
-  def connect_ways_to(terminal)
-    if 2 == terminal
-      return
-    end
-
-    connected_ways = @way_table[1][terminal]
-    2.upto(terminal-1) do |pivot|
-       ways_before_pivot = @way_table[1][pivot]
-       ways_after_pivot  = @way_table[pivot][terminal]
-
-       ways_before_pivot.product(ways_after_pivot) do |way1, way2|
-         connected_ways << connect_ways(1, terminal, way1, way2)
-       end
-    end
-  end
-
-  def connect_ways(start, terminal, way1, way2)
-    credits = way1.credits + way2.credits
-    time    = way1.time    + way2.time
-
-    Way.new(start, terminal, credits, time)
-  end
+  [ num_cities, cost_limit, num_ways, ways_from ]
 end
 
 def main
-  problem = ShortcutProblem.load(STDIN)
-  puts problem.solve
+  num_cities, cost_limit, num_ways, ways_from = load_problem(STDIN)
+
+  candidates = [ { pos: 1, cost: 0, time: 0 } ]
+  result = nil
+
+pos_head = 1
+  until candidates.empty?
+    candidates.sort_by!{|c| c[:time] }
+
+    current = candidates.shift
+    if num_cities == current[:pos]
+      result = current
+      break
+    end
+
+    next unless ways_from[current[:pos]]
+
+    ways_from[current[:pos]].each do |next_way|
+      cost = current[:cost] + next_way[:cost]
+      time = current[:time] + next_way[:time]
+      next if cost_limit < cost
+      candidates.unshift({ pos: next_way[:terminal], cost: cost, time: time })
+    end
+  end
+
+  if result.nil?
+    puts -1
+    exit 0
+  end
+  puts result[:time]
 end
 
 main
