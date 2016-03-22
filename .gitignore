@@ -4,4 +4,4 @@
 _*.input
 _*.output
 submit.auth.yaml
-/*.exe.dSYM
+/*.dSYM
