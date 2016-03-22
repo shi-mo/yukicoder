@@ -3,13 +3,13 @@
 set -u
 
 if [ $# -lt 1 ]; then
-    echo "usage: $0 9001" >&2
+    echo "usage: $0 9001.c" >&2
     exit 1
 fi
 
-if [ -e $1.rb ]; then
-  cat $1.rb | pbcopy
-  exit 0
+if [ ! -e $1 ]; then
+    echo "$1 does not exist" >&2
+    exit 1
 fi
 
-cat $1.c | pbcopy
+cat $1 | pbcopy
