@@ -1,6 +1,6 @@
 CFLAGS  := -g -Wall
 SRCS    := $(shell ls *.c)
-IDS     := $(patsubst %.c,%,$(SRCS)) $(patsubst %.rb,%,$(shell ls *.rb))
+IDS     := $(patsubst %.c,%.exe,$(SRCS)) $(shell ls *.rb)
 TARGETS := $(patsubst %.c,%.exe,$(SRCS))
 CLEAN	:= *~ */*~ */_*.input */_*.output
 
