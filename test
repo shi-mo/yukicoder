@@ -35,6 +35,14 @@ for ID in $*; do
                 ruby ${SCRIPT}
             done
         fi
+
+        ls *.erb >/dev/null 2>&1
+        if [ 0 -eq $? ]; then
+            for ERB in *.erb; do
+                ERB_OUTPUT_FILE=_`echo ${ERB} | sed "s/\.erb$//"`
+                erb ${ERB} > ${ERB_OUTPUT_FILE}
+            done
+        fi
     )
 
     for TEST_INPUT in ${DIR}/*.input; do
