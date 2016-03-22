@@ -7,21 +7,24 @@ if [ $# -lt 1 ]; then
     exit 1
 fi
 
-for ID in $*; do
-    DIR=${ID}
-    BIN=./${DIR}.exe
-    if [ ! -e ${BIN} ]; then
-        BIN="ruby ${DIR}.rb"
-    fi
+function main () {
+    for PROBLEM_ID in $*; do
+        if [ ! -e ${PROBLEM_ID}/ ]; then
+            echo "${PROBLEM_ID} NO TestCase" 1>&2
+            continue
+        fi
 
-    echo -n "${ID} "
-    if [ ! -e ${DIR}/ ]; then
-        echo ""
-        continue
-    fi
+        generate_testcases_for ${PROBLEM_ID}
+        run_test_for ${PROBLEM_ID}
+    done
+}
+
+function generate_testcases_for () {
+    PROBLEM_ID=$1
 
     (
-        cd ${DIR}
+        cd ${PROBLEM_ID}
+
         ls gen_*.rb >/dev/null 2>&1
         if [ 0 -eq $? ]; then
             for SCRIPT in gen_*.rb; do
@@ -37,22 +40,42 @@ for ID in $*; do
             done
         fi
     )
+}
 
-    for TEST_INPUT in ${DIR}/*.input; do
-        TEST_NAME=`echo ${TEST_INPUT} | sed "s/^${DIR}\///" | sed "s/\.input$//"`
-        TEST_OUTPUT=${DIR}/${TEST_NAME}.output
+function run_test_for () {
+    PROBLEM_ID=$1
 
-        if [ -e ${TEST_OUTPUT} ]; then
-            ${BIN} < ${TEST_INPUT} | diff -u ${TEST_OUTPUT} -
-        else
-            ${BIN} < ${TEST_INPUT} >/dev/null
-        fi
-        STATUS=$?
-        if [ 0 -ne ${STATUS} ]; then
-            echo "Test failed: ${TEST_NAME} (status ${STATUS})"
-        else
-            echo -n "."
-        fi
+    BIN=./${PROBLEM_ID}.exe
+    if [ ! -e ${BIN} ]; then
+        BIN="ruby ${PROBLEM_ID}.rb"
+    fi
+
+    echo -n "${PROBLEM_ID} "
+    for TEST_INPUT in ${PROBLEM_ID}/*.input; do
+        run_testcase ${PROBLEM_ID} "${BIN}" ${TEST_INPUT}
     done
     echo ""
-done
+}
+
+function run_testcase () {
+    PROBLEM_ID=$1
+    BIN="$2"
+    TEST_INPUT=$3
+
+    TEST_NAME=`echo ${TEST_INPUT} | sed "s/^${PROBLEM_ID}\///" | sed "s/\.input$//"`
+    TEST_OUTPUT=${PROBLEM_ID}/${TEST_NAME}.output
+
+    if [ -e ${TEST_OUTPUT} ]; then
+        ${BIN} < ${TEST_INPUT} | diff -u ${TEST_OUTPUT} -
+    else
+        ${BIN} < ${TEST_INPUT} >/dev/null
+    fi
+    STATUS=$?
+    if [ 0 -ne ${STATUS} ]; then
+        echo "Test failed: ${TEST_NAME} (status ${STATUS})"
+    else
+        echo -n "."
+    fi
+}
+
+main $*
