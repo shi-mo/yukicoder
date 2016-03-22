@@ -22,13 +22,6 @@ for ID in $*; do
 
     (
         cd ${DIR}
-        ls gen_*.sh >/dev/null 2>&1
-        if [ 0 -eq $? ]; then
-            for SCRIPT in gen_*.sh; do
-                sh ${SCRIPT}
-            done
-        fi
-
         ls gen_*.rb >/dev/null 2>&1
         if [ 0 -eq $? ]; then
             for SCRIPT in gen_*.rb; do
