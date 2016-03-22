@@ -14,11 +14,11 @@ function main () {
         PROBLEM_ID=`echo ${TEST_TARGET} | sed "s/\.exe$//" | sed "s/\.rb$//"`
 
         if [ ! -e ${TEST_TARGET} ]; then
-            echo "${TEST_TARGET} doesn't exist" 1>&2
+            echo "${TEST_TARGET} does not exist." >&2
             continue
         fi
         if [ ! -e ${PROBLEM_ID}/ ]; then
-            echo "${PROBLEM_ID} NO testcase" 1>&2
+            echo "${PROBLEM_ID} NO testcase." >&2
             continue
         fi
 
