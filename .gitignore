@@ -4,3 +4,4 @@
 _*.input
 _*.output
 /*.dSYM
+/_test.diff

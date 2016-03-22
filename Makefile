@@ -2,7 +2,8 @@ CFLAGS  := -g -Wall
 SRCS    := $(shell ls *.c)
 IDS     := $(patsubst %.c,%.exe,$(SRCS)) $(shell ls *.rb)
 TARGETS := $(patsubst %.c,%.exe,$(SRCS))
-CLEAN	:= *~ */*~ */_*.input */_*.output
+CLEAN	:= *~ */*~ */_*.input */_*.output _test.diff
+CLOBBER	:= *.exe.dSYM
 
 all:	build
 
@@ -23,4 +24,4 @@ clean:
 
 .PHONY: clobber
 clobber: clean
-	rm -f $(TARGETS)
+	rm -rf $(TARGETS) $(CLOBBER)

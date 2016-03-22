@@ -7,7 +7,9 @@ if [ $# -lt 1 ]; then
     exit 1
 fi
 
+DIFF_FILE=_test.diff
 function main () {
+    echo -n '' > ${DIFF_FILE}
     for TEST_TARGET in $*; do
         PROBLEM_ID=`echo ${TEST_TARGET} | sed "s/\.exe$//" | sed "s/\.rb$//"`
 
@@ -72,7 +74,7 @@ function run_testcase () {
     TEST_OUTPUT=${PROBLEM_ID}/${TEST_NAME}.output
 
     if [ -e ${TEST_OUTPUT} ]; then
-        ${RUNNER} < ${TEST_INPUT} | diff -u ${TEST_OUTPUT} -
+        ${RUNNER} < ${TEST_INPUT} | diff -u ${TEST_OUTPUT} - >> ${DIFF_FILE}
     else
         ${RUNNER} < ${TEST_INPUT} >/dev/null
     fi
