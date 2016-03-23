@@ -1,0 +1,7 @@
+50
+49
+<%= 30 * 49 %>
+<%= Array.new(49){|i| Array.new(30, i+1) }.flatten.join(' ') %>
+<%= Array.new(49){|i| Array.new(30, i+2) }.flatten.join(' ') %>
+<%= ([ 1 ] * 30 * 49).join(' ') %>
+<%= Array.new(49){|i| (1..30).to_a.map{|j| ((49-i)**2) * (j-1) + 1 } }.flatten.join(' ') %>
