@@ -3,7 +3,7 @@
 set -u
 
 if [ $# -lt 1 ]; then
-    echo "usage: $0 0001.exe 0002.rb ..." >&2
+    echo "usage: $0 0001.exe 0002.rb d0003 ..." >&2
     exit 1
 fi
 
@@ -11,7 +11,7 @@ DIFF_FILE=_test.diff
 function main () {
     echo -n '' > ${DIFF_FILE}
     for TEST_TARGET in $*; do
-        PROBLEM_ID=`echo ${TEST_TARGET} | sed "s/\.exe$//" | sed "s/\.rb$//"`
+        PROBLEM_ID=`echo ${TEST_TARGET} | sed "s/\.exe$//" | sed "s/\.rb$//" | sed "s/^d//"`
 
         if [ ! -e ${TEST_TARGET} ]; then
             echo "${TEST_TARGET} does not exist." >&2

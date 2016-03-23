@@ -1,22 +1,34 @@
-CFLAGS  := -g -Wall
-SRCS    := $(shell ls *.c)
-IDS     := $(patsubst %.c,%.exe,$(SRCS)) $(shell ls *.rb)
-TARGETS := $(patsubst %.c,%.exe,$(SRCS))
-CLEAN	:= *~ */*~ */_*.input */_*.output _test.diff
-CLOBBER	:= *.exe.dSYM
+C_FLAGS   := -g -Wall
+C_SRCS    := $(shell ls *.c)
+C_TARGETS := $(patsubst %.c,%.exe,$(C_SRCS))
+
+D_FLAGS   := -de -w
+D_SRCS    := $(shell ls *.d)
+D_TARGETS := $(patsubst %.d,%,$(D_SRCS))
+
+TARGETS   := $(C_TARGETS) $(D_TARGETS)
+TEST_TARGETS := $(TARGETS) $(shell ls *.rb)
+
+CLEAN	  := *~ */*~ */_*.input */_*.output _test.diff
+CLOBBER	  := *.dSYM
 
 all:	build
 
 .PHONY: build
 build: $(TARGETS)
 
-.SUFFIXES: .c .exe
+.SUFFIXES: .c .exe .d
 .c.exe:
-	gcc $(CFLAGS) -o $@ $<
+	gcc $(C_FLAGS) -o $@ $<
+
+.d:
+	dmd $(D_FLAGS) $<
+	rm $@.o
+
 
 .PHONY: test
 test: build
-	./test $(IDS)
+	./test $(TEST_TARGETS)
 
 .PHONY: clean
 clean:
