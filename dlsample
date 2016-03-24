@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require 'nokogiri'
+require 'open-uri'
+require 'fileutils'
+
+def main
+  if 2 != ARGV.size
+    warn "usage: #{__FILE__} PROBLEM_ID PAGE_ID"
+    exit 1
+  end
+  problem_id, page_id = ARGV[0..1]
+
+  dir = "#{File.dirname(__FILE__)}/#{sprintf("%04d", problem_id)}"
+  FileUtils.mkdir(dir) unless File.exist?(dir)
+
+  download_create_sample_data_files(dir, page_id)
+end
+
+def download_create_sample_data_files(dir, page_id)
+  doc = Nokogiri::HTML(open("http://yukicoder.me/problems/#{page_id}"))
+  doc.css('.sample').enum_for(:each).with_index do |sample, i|
+    input, output = sample.css('.paragraph pre').map{|node| node.content.strip }
+    basename = "#{dir}/0_#{i+1}_sample"
+    open("#{basename}.input", 'w') do |f|
+      f.puts input
+    end
+    open("#{basename}.output", 'w') do |f|
+      f.puts output
+    end
+  end
+end
+
+main
