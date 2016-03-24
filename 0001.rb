@@ -1,5 +1,3 @@
-#!ruby
-
 def load_int(io)
   io.gets.to_i
 end
