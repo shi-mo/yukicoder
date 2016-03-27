@@ -9,9 +9,5 @@ void main() {
     ubyte[] b = readln().strip.map!(to!ubyte).array;
 
     sort(a); sort(b);
-    if (to!string(a) == to!string(b)) {
-        writeln("YES");
-        return;
-    }
-    writeln("NO");
+    writeln((a == b) ? "YES" : "NO");
 }
