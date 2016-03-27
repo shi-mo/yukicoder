@@ -10,23 +10,15 @@ end
 def move_from(i, n)
   return unless $nmoves[i]
 
-  fwd = i + bitcount(i)
-  if fwd <= n
-    n_fwd = $nmoves[i] + 1
-    if $nmoves[fwd].nil? || n_fwd < $nmoves[fwd]
-      $nmoves[fwd] = n_fwd
-      move_from(fwd, n)
-    end
+  [i + bitcount(i), i - bitcount(i)].each do |neighbor|
+    next if (neighbor < 1) || (n < neighbor)
+
+    nm_neighbor = $nmoves[i] + 1
+    next if $nmoves[neighbor] && $nmoves[neighbor] <= nm_neighbor
+
+    $nmoves[neighbor] = nm_neighbor
+    move_from(neighbor, n)
   end
-
-  back = i - bitcount(i)
-  return if back < 1
-
-  n_back = $nmoves[i] + 1
-  return if $nmoves[back] && $nmoves[back] <= n_back
-
-  $nmoves[back] = n_back
-  move_from(back, n)
 end
 
 $nmoves[1] = 1
