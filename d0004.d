@@ -15,9 +15,9 @@ void main() {
     }
 
     bool[] dp = [ true ]; dp.length = sum + 1;
-    foreach(i; 0..n) {
-        for (int j = to!int(dp.length) - 1 - w[i]; 0 <= j; --j) {
-            dp[j + w[i]] |= dp[j];
+    foreach (i; 0..n) {
+        foreach_reverse (j, v; dp[0 .. ($ - w[i])]) {
+            dp[j + w[i]] |= v;
         }
     }
     writeln(dp[sum/2] ? "possible" : "impossible");
