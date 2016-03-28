@@ -1,10 +1,12 @@
 n = gets.to_i
 v = [nil] + gets.chomp!.split.map(&:to_i)
 
-dp_a = [ 0, v[1] ] # scores include i-th dish
+dp  = [ 0, v[1] ] # scores include i-th dish
+max = [ 0, v[1] ] # max value of dp[0..i]
 
 2.upto(n) do |i|
-  dp_a[i] = v[i] + dp_a[0..(i-2)].max
+  dp[i] = v[i] + max[i-2]
+  max[i] = [ dp[i], max[i-1] ].max
 end
 
-puts [ dp_a[n], dp_a[n-1] ].max
+puts [ dp[n], dp[n-1] ].max
