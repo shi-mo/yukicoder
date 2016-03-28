@@ -21,7 +21,7 @@ def download_create_sample_data_files(dir, page_id)
   doc = Nokogiri::HTML(open("http://yukicoder.me/problems/#{page_id}"))
   doc.css('.sample').enum_for(:each).with_index do |sample, i|
     input, output = sample.css('.paragraph pre').map{|node| node.content.strip }
-    basename = "#{dir}/0_#{i+1}_sample"
+    basename = "#{dir}/0_sample#{i+1}"
     open("#{basename}.input", 'w') do |f|
       f.puts input
     end
