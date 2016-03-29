@@ -2,15 +2,15 @@ n = gets.to_i
 
 def prime_numbers(n)
   p = []
+  not_prime = []
+
   2.upto(n) do |i|
-    is_prime = true
-    p.each do |p_|
-      if 0 == i % p_
-        is_prime = false
-        break
-      end
+    next if not_prime[i]
+
+    p << i
+    (i*2).step(n, i) do |j|
+      not_prime[j] = true
     end
-    p << i if is_prime
   end
   p
 end

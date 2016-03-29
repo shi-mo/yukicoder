@@ -19,15 +19,15 @@ void main() {
 
 uint[] primeNumbers(uint n) {
     uint[] p = [];
+    bool[] notPrime = []; notPrime.length = n + 1;
+
     foreach (i; 2..(n+1)) {
-        bool isPrime = true;
-        foreach (p_; p) {
-            if (0 == i % p_) {
-                isPrime = false;
-                break;
-            }
+        if (notPrime[i]) { continue; }
+
+        p ~= i;
+        for (uint j = i; j <= n; j += i) {
+            notPrime[j] = true;
         }
-        if (isPrime) { p ~= i; }
     }
     return p;
 }
