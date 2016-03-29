@@ -2,7 +2,6 @@ import std.stdio;
 import std.algorithm;
 import std.array;
 
-
 uint[] p;
 bool[] dp;
 bool[] examined;
