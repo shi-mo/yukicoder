@@ -24,8 +24,7 @@ uint[][] loadScoreTable(uint n, uint m) {
     return table;
 }
 
-uint dfs(const uint[] _done, const uint[] left, const uint[][] score) {
-    uint[] done = _done.dup;
+uint dfs(uint[] done, const uint[] left, const uint[][] score) {
     sort(done);
     string key = done.map!(to!string).join;
 
