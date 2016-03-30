@@ -1,0 +1,7 @@
+9 72
+<%- 9.times do |i| -%>
+  <%- 9.times do |j| -%>
+    <%- next if i == j -%>
+<%= [i, j, 10000].join(' ') %>
+  <%- end -%>
+<%- end -%>

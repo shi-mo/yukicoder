@@ -1,0 +1,8 @@
+9 72
+<%- srand(43220) -%>
+<%- 9.times do |i| -%>
+  <%- 9.times do |j| -%>
+    <%- next if i == j -%>
+<%= [i, j, 1+rand(10000)].join(' ') %>
+  <%- end -%>
+<%- end -%>

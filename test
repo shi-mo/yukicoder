@@ -44,7 +44,7 @@ function generate_testcases_for () {
         if [ 0 -eq $? ]; then
             for ERB in *.erb; do
                 ERB_OUTPUT_FILE=_`echo ${ERB} | sed "s/\.erb$//"`
-                erb ${ERB} > ${ERB_OUTPUT_FILE}
+                erb -T - ${ERB} > ${ERB_OUTPUT_FILE}
             done
         fi
     )
