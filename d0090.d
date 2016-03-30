@@ -1,17 +1,16 @@
 import std.stdio;
+import std.array;
+import std.conv;
 import std.algorithm;
+
+uint[string] dp;
 
 void main() {
     uint n, m; readf("%s %s\n", &n, &m);
-    uint[][] scoreTable = loadScoreTable(n, m);
+    uint[][] score = loadScoreTable(n, m);
 
-    uint maxScore = 0;
     uint[] a; foreach (i; 0..n) a ~= i;
-    do {
-        maxScore = max( maxScore, score(a, scoreTable) );
-    } while (nextPermutation(a));
-
-    writeln(maxScore);
+    writeln(dfs([], a, score));
 }
 
 uint[][] loadScoreTable(uint n, uint m) {
@@ -25,13 +24,21 @@ uint[][] loadScoreTable(uint n, uint m) {
     return table;
 }
 
-uint score(uint[] a, uint[][] scoreTable) {
-    uint s = 0;
+uint dfs(const uint[] _done, const uint[] left, const uint[][] score) {
+    uint[] done = _done.dup;
+    sort(done);
+    string key = done.map!(to!string).join;
 
-    foreach (j, aj; a) {
-        foreach (_, ai; a[0..j]) {
-            s += scoreTable[ai][aj];
-        }
+    if (key in dp) return dp[key];
+    if (0 == left.length) return 0;
+
+    uint maxScore = 0;
+    foreach (i; left) {
+        uint s = 0;
+        foreach (j; done) s += score[i][j];
+        s += dfs(done ~ i, left.dup.remove!(a => i == a), score);
+
+        maxScore = max(maxScore, s);
     }
-    return s;
+    return dp[key] = maxScore;
 }
