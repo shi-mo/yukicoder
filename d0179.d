@@ -1,6 +1,5 @@
 import std.stdio;
 import std.string;
-import std.conv;
 
 void main() {
     int h, w; readf("%s %s\n", &h, &w);
