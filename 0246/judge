@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+x = ARGV.shift.to_i
+
+y = 0
+100.times do
+  q, y = gets.chomp!.split
+  y = y.to_i
+
+  if '?' == q
+    puts (y <= x) ? 1 : 0
+    STDOUT.flush
+    next
+  end
+  if '!' == q
+    exit 0 if y == x
+    break
+  end
+end
+
+warn "[Wrong Answer] x:#{x} y:#{y}"
+exit 1
