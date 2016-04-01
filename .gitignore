@@ -3,6 +3,6 @@
 *.swp
 _*.input
 _*.output
-/*.dSYM
+*.dSYM
+d????
 /_test.diff
-/d????

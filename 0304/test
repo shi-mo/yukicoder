@@ -30,5 +30,5 @@ function test() {
     )
 }
 
-test 'Ruby' 'ruby ../0304.rb'
-test 'D   ' '../d0304'
+test 'Ruby' 'ruby 0304.rb'
+test 'D   ' './d0304'
