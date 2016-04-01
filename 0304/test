@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -u
+
+function ioloop() {
+    FIFO=$(mktemp -u /tmp/ioloop_$$_XXXXXX ) &&
+    trap "rm -f ${FIFO}" EXIT &&
+    mkfifo ${FIFO} &&
+    ( : <${FIFO} & ) &&    # avoid deadlock on opening pipe
+    exec >${FIFO} <${FIFO}
+}
+
+(
+    cd `dirname $0`
+
+    for ANS in *.ans; do
+        RUN_PROGRAM="ruby ../0304.rb"
+	( ioloop && ./judge ${ANS} | ${RUN_PROGRAM} )
+        STATUS=$?
+        if [ 0 -ne ${STATUS} ]; then
+            echo "Test failed: ${ANS} (status ${STATUS})"
+        else
+            echo -n "."
+        fi
+    done
+    echo ""
+)
