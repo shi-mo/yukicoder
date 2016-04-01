@@ -10,18 +10,25 @@ function ioloop() {
     exec >${FIFO} <${FIFO}
 }
 
-(
-    cd `dirname $0`
+function test() {
+    NAME=$1
+    RUN_PROGRAM="$2"
+    (
+        cd `dirname $0`
+    
+        echo -n "Test ${NAME}: "
+        for ANS in *.ans; do
+            ( ioloop && ./judge ${ANS} | ${RUN_PROGRAM} )
+            STATUS=$?
+            if [ 0 -ne ${STATUS} ]; then
+                echo "Test failed: ${ANS} (status ${STATUS})"
+            else
+                echo -n "."
+            fi
+        done
+        echo ""
+    )
+}
 
-    for ANS in *.ans; do
-        RUN_PROGRAM="ruby ../0304.rb"
-	( ioloop && ./judge ${ANS} | ${RUN_PROGRAM} )
-        STATUS=$?
-        if [ 0 -ne ${STATUS} ]; then
-            echo "Test failed: ${ANS} (status ${STATUS})"
-        else
-            echo -n "."
-        fi
-    done
-    echo ""
-)
+test 'Ruby' 'ruby ../0304.rb'
+test 'D   ' '../d0304'
