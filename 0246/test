@@ -31,4 +31,4 @@ function test() {
 }
 
 test 'Ruby' 'ruby 0246.rb'
-#test 'D   ' './d0246'
+test 'D   ' './d0246'
