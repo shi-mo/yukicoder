@@ -5,20 +5,20 @@ require 'open-uri'
 require 'fileutils'
 
 def main
-  if 2 != ARGV.size
-    warn "usage: #{__FILE__} PROBLEM_ID PAGE_ID"
+  if 1 != ARGV.size
+    warn "usage: #{__FILE__} PROBLEM_ID"
     exit 1
   end
-  problem_id, page_id = ARGV[0..1]
+  problem_id = ARGV.shift
 
   dir = "#{File.dirname(__FILE__)}/#{sprintf("%04d", problem_id)}"
   FileUtils.mkdir(dir) unless File.exist?(dir)
 
-  download_create_sample_data_files(dir, page_id)
+  download_create_sample_data_files(dir, problem_id)
 end
 
-def download_create_sample_data_files(dir, page_id)
-  doc = Nokogiri::HTML(open("http://yukicoder.me/problems/#{page_id}"))
+def download_create_sample_data_files(dir, problem_id)
+  doc = Nokogiri::HTML(open("http://yukicoder.me/problems/no/#{problem_id}"))
   doc.css('.sample').enum_for(:each).with_index do |sample, i|
     input, output = sample.css('.paragraph pre').map{|node| node.content.strip }
     basename = "#{dir}/0_sample#{i+1}"
