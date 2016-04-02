@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+a = 4.times.map{ ARGV.shift.to_i }
+
+#warn "[Answer] #{a.inspect}"
+
+100.times do
+  n = gets.split.map(&:to_i)[0..3]
+  x = 0
+  n.each.with_index do |ni, i|
+    x += 1 if ni == a[i]
+  end
+  y = 4 - (a - n).size - x
+
+  puts "#{x} #{y}"
+  STDOUT.flush
+  exit 0 if 4 == x
+end
+
+warn "[Wrong Answer] a:#{a.inspect} n:#{n.inspect}"
+exit 1
