@@ -1,11 +1,14 @@
 #!/usr/bin/env ruby
 
+DEBUG = false
+
 a = 4.times.map{ ARGV.shift.to_i }
 
-#warn "[Answer] #{a.inspect}"
+warn "[Answer] #{a.inspect}" if DEBUG
 
 100.times do
   n = gets.split.map(&:to_i)[0..3]
+  warn "[Query] #{n.inspect}" if DEBUG
   x = 0
   n.each.with_index do |ni, i|
     x += 1 if ni == a[i]

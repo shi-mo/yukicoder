@@ -17,7 +17,7 @@ function test() {
         cd `dirname $0`
     
         echo -n "Test ${NAME}: "
-        for ANS in '9 8 7 6' '7 6 5 9' '8 0 3 7' '0 1 2 3' '6 5 2 1' '8 4 0 9'; do
+        for ANS in '9 8 7 6' '7 6 5 9' '8 0 3 7' '0 1 2 3' '6 5 2 1' '8 4 0 9' '1 2 3 4'; do
             ( ioloop && ./judge ${ANS} | ${RUN_PROGRAM} )
             STATUS=$?
             if [ 0 -ne ${STATUS} ]; then
@@ -31,4 +31,4 @@ function test() {
 }
 
 test 'Ruby' 'ruby 0355.rb'
-#test 'D   ' './d0355'
+test 'D   ' './d0355'
