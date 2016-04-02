@@ -9,7 +9,7 @@ def main
     warn "usage: #{__FILE__} PROBLEM_ID"
     exit 1
   end
-  problem_id = ARGV.shift
+  problem_id = ARGV.shift.to_i
 
   dir = "#{File.dirname(__FILE__)}/#{sprintf("%04d", problem_id)}"
   FileUtils.mkdir(dir) unless File.exist?(dir)
