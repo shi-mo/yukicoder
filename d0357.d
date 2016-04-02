@@ -3,14 +3,16 @@ import std.array;
 import std.conv;
 import std.algorithm;
 
-uint[string] dp;
+long[] dp;
+enum UNDEF = -1L;
 
 void main() {
     uint n, m; readf("%s %s\n", &n, &m);
     uint[][] score = loadScoreTable(n, m);
 
-    uint[] a; foreach (i; 0..n) a ~= i;
-    writeln(dfs([], a, score));
+    uint a = 2^^n - 1;
+    dp.length = a+1; foreach (i; 0..(a+1)) { dp[i] = UNDEF; }
+    writeln(dfs(0, a, n, score));
 }
 
 uint[][] loadScoreTable(uint n, uint m) {
@@ -24,20 +26,21 @@ uint[][] loadScoreTable(uint n, uint m) {
     return table;
 }
 
-uint dfs(uint[] done, const uint[] left, const uint[][] score) {
-    sort(done);
-    string key = done.map!(to!string).join("-");
+long dfs(uint done, uint left, uint n, const uint[][] score) {
+    if (UNDEF != dp[done]) return dp[done];
+    if (0 == left) return 0;
 
-    if (key in dp) return dp[key];
-    if (0 == left.length) return 0;
+    long maxScore = 0;
+    foreach (i; 0..n) {
+        if (0 == (left & 1<<i)) continue;
 
-    uint maxScore = 0;
-    foreach (i; left) {
-        uint s = 0;
-        foreach (j; done) s += score[i][j];
-        s += dfs(done ~ i, left.dup.remove!(a => i == a), score);
+        long s = 0;
+        foreach (j; 0..n) {
+            if (done & 1<<j) s += score[i][j];
+        }
+        s += dfs(done | 1<<i, left & ~(1<<i), n, score);
 
         maxScore = max(maxScore, s);
     }
-    return dp[key] = maxScore;
+    return dp[done] = maxScore;
 }
