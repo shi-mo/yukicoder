@@ -2,6 +2,7 @@ import std.stdio;
 import std.conv;
 import std.array;
 import std.algorithm;
+import std.concurrency;
 import core.bitop;
 import core.stdc.stdlib;
 
@@ -54,7 +55,11 @@ ushort[][] group(ushort q, ushort[] candidates) {
 }
 
 void query(int[] n) {
-    writef("%s %s %s %s\n", n[0], n[1], n[2], n[3]);
+    spawn(&spawnedQuery, n[0], n[1], n[2], n[3]);
+}
+
+void spawnedQuery(int n0, int n1, int n2, int n3) {
+    writef("%s %s %s %s\n", n0, n1, n2, n3);
     stdout.flush;
 }
 
