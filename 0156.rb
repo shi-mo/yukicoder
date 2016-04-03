@@ -1,13 +1,11 @@
 n, m = gets.split.map(&:to_i)
-c = gets.split.map(&:to_i).sort!.reverse!
+c = gets.split.map(&:to_i).sort!
 
-sc = c.inject(:+)
-rest = sc - m
-
-ans = n
+ans = 0
 c.each do |ci|
-  break if rest <= 0
-  rest -= ci
-  ans -= 1
+  break if m <= 0
+  break if m < ci
+  m -= ci
+  ans += 1
 end
 puts ans

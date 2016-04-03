@@ -6,14 +6,14 @@ import std.array;
 
 void main() {
     int n, m; readf("%s %s\n", &n, &m);
-    int[] c = readln.strip.split.map!(to!int).array.sort!("a > b").array;
+    int[] c = readln.strip.split.map!(to!int).array.sort().array;
 
-    int rest = sum(c) - m;
-    int ans = n;
+    int ans = 0;
     foreach (ci; c) {
-        if (rest <= 0) break;
-        rest -= ci;
-        --ans;
+        if (m <= 0) break;
+        if (m < ci) break;
+        m -= ci;
+        ++ans;
     }
     writeln(ans);
 }
