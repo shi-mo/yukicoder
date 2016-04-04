@@ -9,7 +9,7 @@ D_TARGETS := $(patsubst %.d,%,$(D_SRCS))
 TARGETS   := $(CPP_TARGETS) $(D_TARGETS)
 TEST_TARGETS := $(D_TARGETS) $(shell ls *.rb)
 
-CLEAN	  := *~ */*~ */_*.input */_*.output
+CLEAN	  := *~ */*~ */_*.in */_*.out
 CLOBBER	  := *.dSYM
 
 all:	build

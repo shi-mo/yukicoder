@@ -59,7 +59,7 @@ function run_test_for () {
         RUNNER="ruby ${TEST_TARGET}"
     fi
     echo -n "${TEST_TARGET} "
-    for TEST_INPUT in ${PROBLEM_ID}/*.input; do
+    for TEST_INPUT in ${PROBLEM_ID}/*.in; do
         run_testcase ${PROBLEM_ID} "${RUNNER}" ${TEST_INPUT}
     done
     echo ""
@@ -70,8 +70,8 @@ function run_testcase () {
     RUNNER="$2"
     TEST_INPUT=$3
 
-    TEST_NAME=`echo ${TEST_INPUT} | sed "s/^${PROBLEM_ID}\///" | sed "s/\.input$//"`
-    TEST_OUTPUT=${PROBLEM_ID}/${TEST_NAME}.output
+    TEST_NAME=`echo ${TEST_INPUT} | sed "s/^${PROBLEM_ID}\///" | sed "s/\.in$//"`
+    TEST_OUTPUT=${PROBLEM_ID}/${TEST_NAME}.out
 
     if [ -e ${TEST_OUTPUT} ]; then
         ${RUNNER} < ${TEST_INPUT} | diff -u ${TEST_OUTPUT} - >> ${DIFF_FILE}

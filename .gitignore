@@ -1,8 +1,8 @@
 *~
 *.exe
 *.swp
-_*.input
-_*.output
+_*.in
+_*.out
 *.dSYM
 d????
 /_test.diff

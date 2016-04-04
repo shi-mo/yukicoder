@@ -22,10 +22,10 @@ def download_create_sample_data_files(dir, problem_id)
   doc.css('.sample').enum_for(:each).with_index do |sample, i|
     input, output = sample.css('.paragraph pre').map{|node| node.content.strip }
     basename = "#{dir}/0_sample#{i+1}"
-    open("#{basename}.input", 'w') do |f|
+    open("#{basename}.in", 'w') do |f|
       f.puts input
     end
-    open("#{basename}.output", 'w') do |f|
+    open("#{basename}.out", 'w') do |f|
       f.puts output
     end
   end
