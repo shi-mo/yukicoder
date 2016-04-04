@@ -9,4 +9,4 @@ n.times do
 end
 
 d = lw.map{|w| m - w }
-puts d.select{|di| 1 == di % 2 }.empty? ? d.inject(:+)/2 : -1
+puts d.index{|di| 1 == di % 2 }.nil? ? d.inject(:+)/2 : -1
