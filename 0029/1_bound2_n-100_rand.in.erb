@@ -1,0 +1,5 @@
+100
+<%- srand(1010101) -%>
+<%- 100.times do -%>
+<%= 3.times.map{ 1+rand(10) }.map(&:to_s).join(' ') %>
+<%- end -%>
