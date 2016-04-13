@@ -1,7 +1,16 @@
+def arg2st(arg)
+  return char2st(arg) if /["]/o =~ arg
+  bin2st '0' + arg.to_i.to_s(2)
+end
+
 def char2st(arg)
   c = arg.gsub(/["]/o, '')
   c = "\n" if '\n' == c
-  sprintf("%08b", c.ord).gsub(/0/o, 'S').gsub(/1/o, 'T')
+  bin2st sprintf("%08b", c.ord)
+end
+
+def bin2st(s)
+  s.gsub(/0/o, 'S').gsub(/1/o, 'T')
 end
 
 while s = gets
@@ -12,9 +21,19 @@ while s = gets
 
   case cmd
   when 'push'
-    print 'SS' + char2st(arg) + "\n"
+    print 'SS' + arg2st(arg) + "\n"
+  when 'sub'
+    print "TSST"
+  when 'heap2stack'
+    print "TTT"
   when 'putchar'
     print "T\nSS"
+  when 'putnum'
+    print "T\nST"
+  when 'readchar'
+    print "T\nTS"
+  when 'readnum'
+    print "T\nTT"
   when 'finish'
     print "\n"*3
   else
