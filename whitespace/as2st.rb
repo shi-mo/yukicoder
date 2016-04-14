@@ -24,7 +24,11 @@ while s = gets
     print 'SS' + arg2st(arg) + "\n"
   when 'sub'
     print "TSST"
-  when 'heap2stack'
+  when 'mul'
+    print "TSS\n"
+  when 'div'
+    print "TSTS"
+  when 'retrieve'
     print "TTT"
   when 'putchar'
     print "T\nSS"
