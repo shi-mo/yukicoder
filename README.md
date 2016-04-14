@@ -29,6 +29,6 @@ Automatically download the sample input/output data &amp; create files for ./tes
 #### (internal behavior)
 
 1. Create a test data directory: ./${PROBLEM_ID}
-2. Download HTML from http://yukicoder.me/problems/${PAGE_ID} .
+2. Download HTML from http://yukicoder.me/problems/no/${PROBLEM_ID} .
 3. Parse HTML and extract sample input/output data.
-4. Write each data into files respectively (under the directory created at 1.).
+4. Write each data into files respectively (under the directory created at 1. ).
