@@ -2,11 +2,15 @@
 My Whitespace compiler (!!incomplete!!).
 
 ## Usage
-### $ cat XXXX.as | ruby as2st.rb | ruby st2ws.rb | pbcopy
+```
+$ cat XXXX.as | ruby as2st.rb | ruby st2ws.rb | pbcopy
+```
 
 ## Reference
-* Whitespace tutorial
-** http://compsoc.dur.ac.uk/whitespace/tutorial.html
+<dl>
+  <dt>Whitespace tutorial</dt>
+  <dd>http://compsoc.dur.ac.uk/whitespace/tutorial.html</dd>
+</dl>
 
 ## Ruby Scripts
 ### as2st.rb
