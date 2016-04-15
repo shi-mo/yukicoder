@@ -1,16 +1,18 @@
 def arg2st(arg)
-  return char2st(arg) if /["]/o =~ arg
-  bin2st '0' + arg.to_i.to_s(2)
+  arg = char2num(arg) if /^["]/o =~ arg
+  num2st arg.to_i
 end
 
-def char2st(arg)
-  c = arg.gsub(/["]/o, '')
+def char2num(arg)
+  c = arg.sub(/^["]/o, '').sub(/["]$/o, '')
   c = "\n" if '\n' == c
-  bin2st sprintf("%08b", c.ord)
+  c.ord
 end
 
-def bin2st(s)
-  s.gsub(/0/o, 'S').gsub(/1/o, 'T')
+def num2st(n)
+  sign = (n < 0) ? '1' : '0'
+  bin = sign + n.abs.to_s(2)
+  bin.gsub(/0/o, 'S').gsub(/1/o, 'T')
 end
 
 while s = gets
