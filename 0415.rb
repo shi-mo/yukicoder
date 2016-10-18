@@ -4,9 +4,4 @@ g = n.gcd(d)
 n = n / g
 d = d / g
 
-puts (case n % d
-when 0
-  n / d - 1
-else
-  n - 1
-end)
+puts (0 == (n % d)) ? (n / d - 1) : (n - 1)
