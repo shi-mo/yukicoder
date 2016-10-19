@@ -8,7 +8,7 @@ const ulong M = 1000003;
 
 void main() {
     ulong x, n; readf("%s %s\n", &x, &n);
-    ulong[] a = readln.strip.split.map!(to!ulong).array.sort().array;
+    ulong[] a = readln.strip.split.map!(to!ulong).array;
 
     writeln(a.map!(ai => powMod(x, ai)).sum % M);
 }
