@@ -17,7 +17,7 @@ function test() {
         cd `dirname $0`
     
         echo -n "Test ${NAME}: "
-        for ANS in '0000000001' '1234567890' '0000000000'; do
+        for ANS in '0000000001' '1234567890' '0000000000' '9999999999' '5555599999'; do
             ( ioloop && ./judge ${ANS} | ${RUN_PROGRAM} )
             STATUS=$?
             if [ 0 -ne ${STATUS} ]; then
