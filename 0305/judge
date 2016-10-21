@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+DEBUG = false
+
+a = ARGV.shift
+
+warn "[Answer] #{a}" if DEBUG
+
+q = nil
+300.times do
+  q = gets.chomp
+  warn "[Query] #{q}" if DEBUG
+  x = 0
+  q.each_char.with_index do |qi, i|
+    x += 1 if qi == a[i]
+  end
+
+  puts "#{x} " + ((x < 10) ? 'locked' : 'unlocked')
+  STDOUT.flush
+  exit 0 if 10 == x
+end
+
+warn "[Wrong Answer] a:#{a} q:#{q}"
+exit 1

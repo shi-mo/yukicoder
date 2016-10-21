@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -u
+
+function ioloop() {
+    FIFO=$(mktemp -u /tmp/ioloop_$$_XXXXXX ) &&
+    trap "rm -f ${FIFO}" EXIT &&
+    mkfifo ${FIFO} &&
+    ( : <${FIFO} & ) &&    # avoid deadlock on opening pipe
+    exec >${FIFO} <${FIFO}
+}
+
+function test() {
+    NAME=$1
+    RUN_PROGRAM="$2"
+    (
+        cd `dirname $0`
+    
+        echo -n "Test ${NAME}: "
+        for ANS in '0000000001' '1234567890' '0000000000'; do
+            ( ioloop && ./judge ${ANS} | ${RUN_PROGRAM} )
+            STATUS=$?
+            if [ 0 -ne ${STATUS} ]; then
+                echo "Test failed: ${ANS} (status ${STATUS})"
+            else
+                echo -n "."
+            fi
+        done
+        echo ""
+    )
+}
+
+test 'Ruby' 'ruby 0305.rb'
