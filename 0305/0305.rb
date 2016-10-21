@@ -26,6 +26,8 @@ def detect_answer(counts)
 
   numbers.each do |i, c|
     10.times do |j|
+      next if answer[j]
+
       q = Array.new(10){ min_i }
       q[j] = i
 
