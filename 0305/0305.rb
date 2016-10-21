@@ -11,35 +11,34 @@ def reply
 end
 
 def detect_counts
-  counts = Array.new(10)
+  counts = []
   0.upto(9) do |i|
     query [i] * 10
-    counts[i] = [i, reply]
+    c = reply
+    counts << [i, c] if 0 < c
   end
   counts
 end
 
 def detect_answer(counts)
-  min_i, min_c = counts.sort_by{|i, c| c }.first
-  numbers = counts.select{|i, c| 0 < c } - [[min_i, min_c]]
-  answer = Array.new(10)
+  numbers = counts.sort_by{|i, c| c }.reverse
+  min_i, min_c = numbers.pop
 
+  answer = Array.new(10)
   numbers.each do |i, c|
+    break unless answer.include?(nil)
     10.times do |j|
       next if answer[j]
 
-      q = Array.new(10){ min_i }
+      q = Array.new(10, min_i)
       q[j] = i
 
       query q
       n = reply
-      next if n <= min_c
+      next if n == min_c
 
-      answer[j] = i
+      answer[j] = (n < min_c) ? min_i : i
     end
-  end
-  answer.map.with_index.select{|i, idx| i.nil? }.each do |i, idx|
-    answer[idx] = min_i
   end
   query answer
 end
