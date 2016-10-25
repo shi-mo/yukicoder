@@ -33,13 +33,6 @@ function generate_testcases_for () {
     (
         cd ${PROBLEM_ID}
 
-        ls gen_*.rb >/dev/null 2>&1
-        if [ 0 -eq $? ]; then
-            for SCRIPT in gen_*.rb; do
-                ruby ${SCRIPT}
-            done
-        fi
-
         ls *.erb >/dev/null 2>&1
         if [ 0 -eq $? ]; then
             for ERB in *.erb; do
