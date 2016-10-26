@@ -1,8 +1,12 @@
 n = gets.to_i
 s = gets.chomp
 
-['00', '11', '1010', '0101'].each do |p|
-  next unless s.include?(p)
+if 4 <= n
+  puts 'YES'
+  exit 0
+end
+
+if s.include?('00') || s.include?('11')
   puts 'YES'
   exit 0
 end
