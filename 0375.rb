@@ -1,5 +1,3 @@
-require 'prime'
-
 n = gets.to_i
 
 tmax = n - 1
