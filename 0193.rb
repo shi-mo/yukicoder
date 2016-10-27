@@ -7,7 +7,7 @@ n = s.length
   next if '+-'.include?(exp[0])
   next if '+-'.include?(exp[-1])
 
-  exp.gsub!(/([+-])[0]+(.+)$/o){|_| $1+$2 }
+  exp.gsub!(/(?:^|([+-]))[0]+(\d+)/o){|_| "#{$1}#{$2}" }
   rmax = [rmax, eval(exp)].max
 end
 puts rmax
