@@ -22,7 +22,7 @@ def download_create_sample_data_files(dir, problem_id)
   html = open(url).read
   doc = Nokogiri::HTML(html, url)
   doc.css('.sample').enum_for(:each).with_index do |sample, i|
-    input, output = sample.css('.paragraph pre').map{|node| node.content.strip }
+    input, output = sample.css('.paragraph pre').map{|node| node.inner_html.strip.gsub('<br>', "\n") }
     basename = "#{dir}/0_sample#{i+1}"
     open("#{basename}.in", 'w') do |f|
       f.puts input
