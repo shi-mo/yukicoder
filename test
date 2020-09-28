@@ -49,7 +49,7 @@ function run_test_for () {
 
     RUNNER=./${TEST_TARGET}
     if [[ "${TEST_TARGET}" =~ \.rb$ ]]; then
-        RUNNER="ruby ${TEST_TARGET}"
+        RUNNER="ruby -w ${TEST_TARGET}"
     fi
     echo -n "${TEST_TARGET} "
     for TEST_INPUT in ${PROBLEM_ID}/*.in; do
