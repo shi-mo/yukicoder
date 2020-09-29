@@ -1,6 +1,2 @@
-#!/bin/bash
-set -u
-
-LINE=''
-read LINE
-printf "%'d\n" $LINE
+read N
+printf "%'d\n" $N
