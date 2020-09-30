@@ -1,0 +1,1 @@
+puts 'yukicoder'[gets.index('?')]
