@@ -19,7 +19,7 @@ void main() {
             writeln("-1");
             continue;
         }
-        writeln((1 == gcd(a, p)) ? 1 : 0);
+        writeln((0 != a%p) ? 1 : 0);
     }
 }
 
