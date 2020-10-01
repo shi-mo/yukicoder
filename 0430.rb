@@ -6,7 +6,7 @@ n = 0
 c.each do |ci|
   si = s
   while /#{ci}/ =~ si
-    si = ($& + $')[1..-1]
+    si = ($& + $')[1..]
     n += 1
   end
 end
