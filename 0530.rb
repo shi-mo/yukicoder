@@ -1,1 +1,1 @@
-puts 2017-gets.to_i
+p 2017-gets.to_i
