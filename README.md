@@ -21,7 +21,7 @@ Run test for a specific file.
 Test target file can be binary / Ruby program (*.rb)
 
 ### $ ./cp4submit FILE
-Copy a source file into the clipboard.
+Copy a source file into clipboard.
 
 ### $ ./dlsample PROBLEM_ID
 Automatically download the sample input/output data &amp; create files for ./test script.
